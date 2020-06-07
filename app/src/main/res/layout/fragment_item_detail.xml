@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F36666"
     tools:context=".detail.ItemDetailFragment">
 
     <FrameLayout
@@ -24,6 +23,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
             app:elevation="0dp">
 
@@ -31,6 +31,8 @@
                 android:id="@+id/toolbar_detail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24" />
         </com.google.android.material.appbar.AppBarLayout>
     </FrameLayout>
@@ -40,7 +42,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/detail_view_background"
         android:orientation="vertical"
-        android:padding="40dp"
+        android:paddingStart="40dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="40dp"
+        android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -50,48 +55,61 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_item_description"
+            style="@style/TextAppearance.Basket.ItemDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_item_name" />
 
         <TextView
             android:id="@+id/tv_energy_label"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            style="@style/TableAttrs"
+            android:layout_marginTop="24dp"
+            android:text="@string/energy"
+            app:layout_constraintEnd_toStartOf="@id/tv_energy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_item_description" />
 
         <TextView
             android:id="@+id/tv_protein_label"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            style="@style/TableAttrs"
+            android:layout_marginTop="4dp"
+            android:text="@string/protein"
+            app:layout_constraintEnd_toStartOf="@id/tv_protein"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_energy_label" />
 
         <TextView
             android:id="@+id/tv_sugar_label"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            style="@style/TableAttrs"
+            android:layout_marginTop="4dp"
+            android:text="@string/sugar"
+            app:layout_constraintEnd_toStartOf="@id/tv_sugar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_protein_label" />
 
         <TextView
             android:id="@+id/tv_fat_label"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            style="@style/TableAttrs"
+            android:layout_marginTop="4dp"
+            android:text="@string/fat"
+            app:layout_constraintEnd_toStartOf="@id/tv_fat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_sugar_label" />
 
         <TextView
             android:id="@+id/tv_energy"
+            style="@style/TextAppearance.Basket.ItemDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_energy_label"
@@ -101,6 +119,7 @@
 
         <TextView
             android:id="@+id/tv_protein"
+            style="@style/TextAppearance.Basket.ItemDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_protein_label"
@@ -110,6 +129,7 @@
 
         <TextView
             android:id="@+id/tv_sugar"
+            style="@style/TextAppearance.Basket.ItemDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_sugar_label"
@@ -119,6 +139,7 @@
 
         <TextView
             android:id="@+id/tv_fat"
+            style="@style/TextAppearance.Basket.ItemDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_fat_label"

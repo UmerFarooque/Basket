@@ -26,4 +26,8 @@ class MainActivity : AppCompatActivity() {
         }
         transaction.commit()
     }
+
+    fun updateStatusBarColor(color: Int) {
+        window.statusBarColor = color
+    }
 }

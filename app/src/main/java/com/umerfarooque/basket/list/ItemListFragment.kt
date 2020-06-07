@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.umerfarooque.basket.MainActivity
 import com.umerfarooque.basket.R
 import com.umerfarooque.basket.data.Item
 import com.umerfarooque.basket.data.ItemCollection
@@ -58,18 +60,34 @@ class ItemListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity).setSupportActionBar(view.app_bar)
+        (activity as MainActivity).updateStatusBarColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimary
+            )
+        )
         view.rv_item_list.setHasFixedSize(true)
         val gridLayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
         view.rv_item_list.layoutManager = gridLayoutManager
         setupRecyclerView(getItems())
-        val adapter = ItemsRecyclerViewAdapter(ItemCollection.getFruitsList())
-        view.rv_item_list.adapter = adapter
+
+        view.findViewById<MaterialButton>(R.id.btn_fruits).setOnClickListener {
+            showFruits = true
+            setupRecyclerView(getItems())
+            updateBackdrop()
+        }
+
+        view.findViewById<MaterialButton>(R.id.btn_vegetables).setOnClickListener {
+            showFruits = false
+            setupRecyclerView(getItems())
+            updateBackdrop()
+        }
     }
 
     private fun setupRecyclerView(items: List<Item>) {
         val adapter: ItemsRecyclerViewAdapter
         if (rv_item_list.adapter == null) {
-            adapter = ItemsRecyclerViewAdapter(getItems())
+            adapter = ItemsRecyclerViewAdapter(items)
             rv_item_list.adapter = adapter
         } else {
             adapter = rv_item_list.adapter as ItemsRecyclerViewAdapter
@@ -86,26 +104,30 @@ class ItemListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.filter) {
-            backdropShown = !backdropShown
-            animatorSet.removeAllListeners()
-            animatorSet.end()
-            animatorSet.cancel()
             updateIcon(item)
-            val translateY =
-                height?.minus(requireContext().resources.getDimensionPixelSize(R.dimen.list_reveal_height))
-
-            val animator = ObjectAnimator.ofFloat(
-                requireView().nsv_list, "translationY",
-                (if (backdropShown) translateY else 0)!!.toFloat()
-            )
-            animator.duration = 500
-            if (interpolator != null) {
-                animator.interpolator = interpolator
-            }
-            animatorSet.play(animator)
-            animator.start()
+            updateBackdrop()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateBackdrop() {
+        backdropShown = !backdropShown
+        animatorSet.removeAllListeners()
+        animatorSet.end()
+        animatorSet.cancel()
+        val translateY =
+            height?.minus(requireContext().resources.getDimensionPixelSize(R.dimen.list_reveal_height))
+
+        val animator = ObjectAnimator.ofFloat(
+            requireView().nsv_list, "translationY",
+            (if (backdropShown) translateY else 0)!!.toFloat()
+        )
+        animator.duration = 500
+        if (interpolator != null) {
+            animator.interpolator = interpolator
+        }
+        animatorSet.play(animator)
+        animator.start()
     }
 
     private fun updateIcon(item: MenuItem) {
@@ -119,12 +141,10 @@ class ItemListFragment : Fragment() {
     }
 
     private fun getItems(): List<Item> {
-        val list: List<Item> = if (showFruits) {
+        return if (showFruits) {
             ItemCollection.getFruitsList()
         } else {
             ItemCollection.getVegetablesList()
         }
-        showFruits = !showFruits
-        return list
     }
 }
